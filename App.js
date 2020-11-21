@@ -1,12 +1,12 @@
 import { apisAreAvailable } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Button, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Button, Text, View } from 'react-native';
 import { YELP_API_KEY } from './api-keys.json';
 
-const getYelpData = () => {
+const getRestaurants = (location) => {
   //GET request
-  fetch('https://api.yelp.com/v3/businesses/search?term=restaurants&location=kingston_ontario', {
+  fetch('https://api.yelp.com/v3/businesses/search?term=restaurants&location=' + location, {
     method: 'GET',
     //Request Type
     headers: {
@@ -17,7 +17,31 @@ const getYelpData = () => {
     //If response is in json then in success
     .then((responseJson) => {
       //Success
-      alert(JSON.stringify(responseJson));
+      alert(responseJson.businesses[0].name);
+      console.log(responseJson.businesses[0]);
+    })
+    //If response is not in json then in error
+    .catch((error) => {
+      //Error
+      alert(JSON.stringify(error));
+      console.error(error);
+    });
+};
+
+const getRestaurantData = (id) => {
+  //GET request
+  fetch('https://api.yelp.com/v3/businesses/' + id, {
+    method: 'GET',
+    //Request Type
+    headers: {
+      'Authorization': 'Bearer ' + YELP_API_KEY
+    },
+  })
+    .then((response) => response.json())
+    //If response is in json then in success
+    .then((responseJson) => {
+      //Success
+      alert(responseJson.name);
       console.log(responseJson);
     })
     //If response is not in json then in error
@@ -29,10 +53,14 @@ const getYelpData = () => {
 };
 
 export default function App() {
+  const location = 'Kingston, ON';
+  const id = 'RT1HlvUzWzMlVNRDSHoN_Q';
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button title="Retrieve sample data" onPress={getYelpData} />
+      <Text>Location: {location}</Text>
+      <Button title="Retrieve restaurants" onPress={getRestaurants(location)} />
+      <Button title="Retrieve restaurant data" onPress={getRestaurantData(id)} />
       <StatusBar style="auto" />
     </View>
   );
