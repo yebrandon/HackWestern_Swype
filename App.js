@@ -1,21 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation-stack'
+import { createAppContainer } from 'react-navigation'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import TitleScreen from './screens/TitleScreen'
+import CollectInfoScreen from './screens/CollectInfoScreen'
+import RestaurantsScreen from './screens/RestaurantsScreen'
+import ChosenScreen from './screens/ChosenScreen'
+import RestaurantInfoScreen from './screens/RestaurantInfoScreen'
+
+const RestaurantStackScreens = createStackNavigator(
+  {
+    Restaurants: RestaurantsScreen,
+    RestaurantInfo: RestaurantInfoScreen,
+    CollectInfo: CollectInfoScreen,
+  },
+  {
+    initialRouteName: 'Restaurants',
+    navigationOptions: {
+      gestureEnabled: true,
+      gestureDirection: "horizontal",
+      headerTintColor: '#a41034',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+
+    },
+  }
+)
+
+const MainStackScreens = createStackNavigator(
+  {
+    Title: TitleScreen,
+    CollectInfo: CollectInfoScreen,
+    Chosen: ChosenScreen,
+    Restaurant: RestaurantStackScreens,
+  },
+  {
+    initialRouteName: 'Title'
+  }
+)
+
+
+
+const AppContainer = createAppContainer(MainStackScreens);
+
+export default class App extends React.Component {
+  render (){
+    return(
+      <AppContainer />
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
