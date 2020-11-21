@@ -50,7 +50,12 @@ export function getDistance(origin, destination) {
 
 export function getRestaurants(location) {
   //GET request
-  fetch('https://api.yelp.com/v3/businesses/search?term=restaurants&location=' + location, {
+  const long = '43.6532';
+  const lat = '79.3832';
+  const radius = '40000';
+  const category = '';
+  const price = '';
+  fetch('https://api.yelp.com/v3/businesses/search?term=restaurants&location=' + location + '&radius=' + radius + '&limit=50&open_now=true', {
     method: 'GET',
     //Request Type
     headers: {
@@ -62,7 +67,7 @@ export function getRestaurants(location) {
     .then((responseJson) => {
       //Success
       alert(responseJson.businesses[0].name);
-      console.log(responseJson.businesses[0]);
+      console.log(responseJson.businesses.map((value) => value.id));
     })
     //If response is not in json then in error
     .catch((error) => {
@@ -86,7 +91,19 @@ export function getRestaurantData(id) {
     .then((responseJson) => {
       //Success
       alert(responseJson.name);
-      console.log(responseJson);
+      const restaurantData = {
+        name: responseJson.name,
+        url: responseJson.url,
+        phone: responseJson.display_phone,
+        categories: responseJson.categories.map((values) => values.title),
+        rating: responseJson.rating,
+        address: responseJson.location.display_address,
+        longitude: responseJson.coordinates.longitude,
+        latitude: responseJson.coordinates.latitude,
+        photos: responseJson.photos,
+        price: responseJson.price,
+        hours: responseJson.hours[0].open.map((value) => [value.start, value.end, value.day])};
+      console.log(restaurantData);
     })
     //If response is not in json then in error
     .catch((error) => {
