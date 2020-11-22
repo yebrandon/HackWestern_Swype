@@ -18,7 +18,6 @@ export default class TitleScreen extends React.Component{
     this.setState ({latitude: coordinates.latitude})
     const restaurants = await getRestaurants('',coordinates.longitude,coordinates.latitude, 40000, "","")
     this.setState({restaurantIDs: restaurants})
-    console.log(restaurants)
   }
 
 

@@ -42,7 +42,6 @@ export async function getRestaurants(location, longitude, latitude, radius, cate
   if (price !== '') {
     link = link + '&price' + price;
   }
-  console.log(link)
   const response = await fetch(link, {
     method: 'GET',
     headers: {
@@ -50,9 +49,7 @@ export async function getRestaurants(location, longitude, latitude, radius, cate
     }
   })
   const body = await response.json()
-  console.log(longitude+"   "+latitude)
   const restaurants = body.businesses.map((value) => value.id);
-  console.log(restaurants)
   return restaurants
 }
 
@@ -68,9 +65,10 @@ export async function getRestaurantData(id) {
     name: body.name,
     url: body.url,
     phone: body.display_phone,
-    categories: body.categories.map((values) => values.title),
+    //categories: body.categories.map((values) => values.title),
+    //categories: body.categories[0].title,
     rating: body.rating,
-    address: body.location.display_address,
+    address: body.location.display_address.join(" "),
     longitude: body.coordinates.longitude,
     latitude: body.coordinates.latitude,
     photos: body.photos,

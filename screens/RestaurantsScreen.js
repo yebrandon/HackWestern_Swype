@@ -1,24 +1,37 @@
 import React from 'react'
-import {Button, Text, View, StyleSheet} from 'react-native'
+import {View, StyleSheet,Text,Button} from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import { GoBack, GoToButton } from '../functions'
 import { Option } from '../Option'
-import { Swiper } from 'react-native-deck-swiper'
+import Swiper from 'react-native-deck-swiper'
+import { getRestaurantData } from '../api-functions'
+
 
 export default class RestaurantsScreen extends React.Component{
- constructor (props) {
-    this.state = {
-      card: props.card,
+  state = {
+      cards: [],
       swipedAllCards: false,
-      cardIndex: 0
+      cardIndex: 0,
+      loaded: false,
+  }
+  async componentDidMount(){
+    let x;
+    const cards=[];
+    for (x of this.props.navigation.state.params.restaurantIDs){
+      cards.push(await getRestaurantData(x))
     }
-  } 
+    this.setState({cards:cards})
+    this.setState({loaded: true })
+  }
   
-  renderCard = (card) =>{
-    return <Option card = {card} />
+  renderCard = (card, index) =>{
+    console.log(card)
+    return (
+    <Option card = {card} />
+    )
   }
 
-  swipedLeft = (card) =>{
+  swipedLeft = () =>{
     this.swiper.swipeLeft()
 
   }
@@ -39,30 +52,40 @@ export default class RestaurantsScreen extends React.Component{
 
   }
 
-  
-  
-  render() {
-        return (
-         <View style={styles.container}>
-            <Swiper
-            ref = {swiper =>{
-              this.swiper = swiper
+  async function getData(card) {
+    return(await getRestaurantData(card))
+  }
+
+  render () {
+    return(
+    <View style={styles.container}>
+        <Swiper
+            cards={this.props.navigation.state.params.restaurantIDs}
+            renderCard={(card) => {
+                const restaurantData = getData(card)
+                return (
+                    <View style={styles.card}>
+                        <Text style={styles.text}>{card.name}</Text>
+                        <Text style={styles.text}>{card.address}</Text>
+                        <Text style={styles.text}>{card.rating}</Text>
+                        <Text style={styles.text}>{card.price}</Text>
+                    </View>
+                )
             }}
-            onSwipedLeft={() => this.swipedLeft(this.state.card)}
-            onSwipedRight={() => this.swipedRight(this.state.card)}
-            onSwipedTop={() => this.swipedTop(this.state.card)}
-            cards = {this.state.card}
-            cardIndex={this.state.cardIndex}
-            renderCard={this.renderCard}
-            onSwipedAll = {this.swipedAll}
-            stackSize={3}
-            stackSeparation={15}
-            disableBottomSwipe = {true}
-            infinite = {true}
-            />
-         </View>
-        );
-    }
+            onSwiped={(cardIndex) => {console.log(cardIndex)}}
+            onSwipedAll={() => {console.log('onSwipedAll')}}
+            cardIndex={0}
+            backgroundColor={'#4FD0E9'}
+            stackSize= {3}>
+            <Button
+                onPress={() => {console.log('oulala')}}
+                title="Press me">
+                You can press me
+            </Button>
+        </Swiper>
+    </View>
+    )
+}
 }
 
 const styles = StyleSheet.create({
