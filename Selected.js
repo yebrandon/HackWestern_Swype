@@ -60,11 +60,13 @@ export default class Selected extends React.Component {
 							</View>
 							<View style={styles.column}>
 								<Text style={styles.metric}>
-									{
+									{['$', '$$', '$$$', '$$$$'].includes(
 										this.props.navigation.state.params.card
 											.price
-									}
-									$
+									)
+										? this.props.navigation.state.params
+												.card.price
+										: '$'}
 								</Text>
 								<Text style={styles.metric}>
 									{
@@ -77,8 +79,7 @@ export default class Selected extends React.Component {
 						</View>
 					</View>
 					<View style={styles.info}>
-						<Text style={styles.title}>Phone</Text>
-						{/* {parseHours(data.hours)} */}
+						<Text style={styles.title}>Contact</Text>
 						<Text style={styles.body}>
 							{this.props.navigation.state.params.card.phone}
 						</Text>

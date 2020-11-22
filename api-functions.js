@@ -63,12 +63,12 @@ export async function getRestaurants(
 		link = link + '&location=' + location;
 	}
 	if (category !== '') {
-		link = link + '&category' + category;
+		link = link + '&category=' + category;
 	}
 	if (price !== '') {
-		link = link + '&price' + price;
+		link = link + '&price=' + price;
 	}
-	//console.log(link)
+	console.log(link);
 	const response = await fetch(link, {
 		method: 'GET',
 		headers: {

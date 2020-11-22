@@ -12,8 +12,6 @@ import { Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { AppLoading } from 'expo';
 import { Picker } from '@react-native-picker/picker';
 import { getCoordinates, getRestaurants } from './api-functions.js';
-import { useNavigation } from '@react-navigation/native';
-import { GoToButton } from './functions';
 
 export default class GetStarted extends React.Component {
 	constructor(props) {
@@ -43,35 +41,24 @@ export default class GetStarted extends React.Component {
 		this.setState({ restaurantIDs: restaurants });
 	}
 
-	/* 	let [fontsLoaded] = useFonts({
-			Raleway_400Regular,
-			Inter_600SemiBold
-		});
-	
-		if (!fontsLoaded) {
-			return <AppLoading />;
-		} */
-
-	onPress = async () => {
-		/* 		const coordinates = await getCoordinates();
+	async reSearch() {
+		const coordinates = await getCoordinates();
 		this.setState({ longitude: coordinates.longitude });
 		this.setState({ latitude: coordinates.latitude });
 		const restaurants = await getRestaurants(
-			'',
+			this.state.location,
 			coordinates.longitude,
 			coordinates.latitude,
 			40000,
-			'',
-			''
+			this.state.cuisine,
+			this.state.price
 		);
 		this.setState({ restaurantIDs: restaurants });
-		console.log(restaurants); */
+		console.log(this.state);
+	}
 
-		/* 		console.log(location);
-		console.log(cuisine);
-		console.log(price);
-		console.log(restaurants); */
-
+	onPress = async () => {
+		await this.reSearch();
 		this.props.navigation.navigate('Stacks', {
 			longitude: this.state.longitude,
 			latitude: this.state.latitude,
@@ -112,16 +99,6 @@ export default class GetStarted extends React.Component {
 								}}
 								value={this.state.cuisine}
 							></TextInput>
-							{/* 						<Picker
-							selectedValue={cuisine}
-							onValueChange={(itemValue, itemIndex) =>
-								setCuisine(itemValue)
-							}
-						>
-							<Picker.Item label='Chinese' value='chinese' />
-							<Picker.Item label='Sushi' value='sushi' />
-							<Picker.Item label='Mexican' value='mexican' />
-						</Picker> */}
 						</View>
 						<Text style={styles.label}>Price </Text>
 						<View style={styles.input}>
@@ -156,22 +133,23 @@ export default class GetStarted extends React.Component {
 const styles = StyleSheet.create({
 	header: {
 		height: 150,
-		padding: 50,
-		backgroundColor: 'white'
+		padding: 50
 	},
 	formContainer: {
 		alignItems: 'center'
 	},
 	title: {
-		fontSize: 30
-		//fontFamily: 'Inter_600SemiBold'
+		fontSize: 30,
+		fontFamily: 'Inter_600SemiBold'
 	},
 	form: {
 		height: 400,
 		width: '80%',
 		padding: 30,
 		backgroundColor: '#F1504E',
-		borderRadius: 30
+		borderRadius: 30,
+		borderColor: 'black',
+		borderWidth: 2
 	},
 	input: {
 		height: 50,
@@ -185,13 +163,13 @@ const styles = StyleSheet.create({
 	},
 	label: {
 		fontSize: 16,
-		//fontFamily: 'Raleway_400Regular',
+		fontFamily: 'Raleway_400Regular',
 		color: 'white',
 		paddingBottom: 10
 	},
 	pressableText: {
 		fontSize: 36,
-		//fontFamily: 'Raleway_400Regular',
+		fontFamily: 'Raleway_400Regular',
 		paddingBottom: 10
 	},
 	buttons: {
@@ -208,7 +186,7 @@ const styles = StyleSheet.create({
 	},
 	submitLabel: {
 		fontSize: 16,
-		//fontFamily: 'Raleway_400Regular',
+		fontFamily: 'Raleway_400Regular',
 		color: 'white'
 	},
 	submit: {

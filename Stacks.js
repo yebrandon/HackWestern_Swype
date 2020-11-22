@@ -9,9 +9,6 @@ import {
 } from 'react-native';
 import Header from './Header';
 import Footer from './Footer';
-import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { getRestaurantData } from './api-functions';
 import Swiper from 'react-native-swiper';
 
@@ -40,21 +37,12 @@ export default class Stacks extends React.Component {
 		this.props.navigation.navigate('GetStarted');
 	};
 
-	buildDeck = () => {
-		this.props.navigation.state.params.restaurantIDs.map(async (id) => {
-			let value = await getRestaurantData(id);
-			console.log(value);
-			//this.setState({ data: [...this.state.data, value] }); //simple value
-		});
-	};
-
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
 				<Header></Header>
-				{/* //<View style={styles.container}>  */}
 				<Swiper
-					//style={styles.wrapper}
+					style={styles.swiper}
 					showsButtons={true}
 					showsPagination={false}
 				>
@@ -65,23 +53,37 @@ export default class Stacks extends React.Component {
 									source={{ uri: card.photos[1] }}
 									style={styles.image}
 								>
-									<View style={styles.textBackground}>
-										<Text style={styles.text}>
+									<View style={styles.info}>
+										<Text style={styles.title}>
 											{card.name}
 										</Text>
-										<Text style={styles.text}>
-											{card.price}$
-										</Text>
-										<Text style={styles.text}>
-											{card.address}
-										</Text>
-										<Text style={styles.text}>
-											{card.rating}/5
-										</Text>
+										<View style={styles.row}>
+											<View style={styles.column}>
+												<Text style={styles.body}>
+													{card.address}
+												</Text>
+											</View>
+											<View style={styles.column}>
+												<Text style={styles.metric}>
+													{[
+														'$',
+														'$$',
+														'$$$',
+														'$$$$'
+													].includes(card.price)
+														? card.price
+														: '$'}
+												</Text>
+												<Text style={styles.metric}>
+													{card.rating} Stars
+												</Text>
+											</View>
+										</View>
 									</View>
 								</ImageBackground>
 								<Button
-									title={'Confirm Location'}
+									color='black'
+									title={'Choose Location'}
 									onPress={() =>
 										this.props.navigation.navigate(
 											'Selected',
@@ -93,35 +95,6 @@ export default class Stacks extends React.Component {
 						);
 					})}
 				</Swiper>
-
-				{/* <View style={styles.arrows}>
-						<View
-							style={{
-								backgroundColor: 'white',
-								borderRadius: 30
-							}}
-						>
-							<MaterialCommunityIcons
-								name='window-close'
-								size={50}
-								color='red'
-							/>
-						</View>
-						<View
-							style={{
-								backgroundColor: 'white',
-								borderRadius: 30
-							}}
-						>
-							<MaterialCommunityIcons
-								name='check'
-								size={50}
-								color='green'
-							/>
-						</View>
-					</View> */}
-				{/* </View> */}
-
 				<Footer goBack={this.goBack} goHome={this.goHome}></Footer>
 			</View>
 		);
@@ -130,57 +103,20 @@ export default class Stacks extends React.Component {
 AppRegistry.registerComponent('myproject', () => SwiperComponent);
 
 const styles = StyleSheet.create({
-	footer: {
-		height: '10%',
-		flexDirection: 'row',
-		backgroundColor: '#F1504E',
-		alignItems: 'center',
-		justifyContent: 'space-evenly'
-	},
 	container: {
-		backgroundColor: 'orange',
 		flex: 1
-	},
-	card: {
-		width: 320,
-		height: 420,
-		backgroundColor: '#FE474C',
-		borderRadius: 5,
-		shadowColor: 'rgba(0,0,0,0.5)',
-		shadowOffset: {
-			width: 0,
-			height: 1
-		},
-		shadowOpacity: 0.5
-	},
-	card1: {
-		backgroundColor: '#FE474C'
-	},
-	card2: {
-		backgroundColor: '#FEB12C'
 	},
 	content: {
 		flex: 5,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
-	arrows: {
-		width: '100%',
-		height: '100%',
-		padding: '10%',
-		flex: 1,
-		alignItems: 'center',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		position: 'absolute',
-		zIndex: 10
-	},
 	image: {
 		flex: 1,
 		resizeMode: 'cover',
 		justifyContent: 'flex-end',
 		overflow: 'hidden',
-		borderRadius: 20
+		alignItems: 'center'
 	},
 	text: {
 		color: 'black',
@@ -190,9 +126,47 @@ const styles = StyleSheet.create({
 	},
 	textBackground: {
 		backgroundColor: '#FFFFFF',
-		borderRadius: 40,
+		borderRadius: 20,
 		marginLeft: 20,
 		marginRight: 20,
 		marginBottom: 20
+	},
+	info: {
+		height: '40%',
+		width: '80%',
+		padding: 10,
+		backgroundColor: '#FFFFFF',
+		marginBottom: 5,
+		paddingBottom: 30,
+		borderRadius: 20
+	},
+	title: {
+		color: 'black',
+		fontFamily: 'Raleway_400Regular',
+		fontSize: 24,
+		padding: 10,
+		paddingBottom: 20
+	},
+	row: {
+		flex: 1,
+		flexDirection: 'row'
+	},
+	column: {
+		flex: 1,
+		marginLeft: 10
+	},
+	body: {
+		color: '#777777',
+		fontFamily: 'Raleway_400Regular',
+		fontSize: 18,
+		paddingLeft: 10
+	},
+	metric: {
+		color: '#777777',
+		fontFamily: 'Raleway_400Regular',
+		fontSize: 18
+	},
+	swiper: {
+		backgroundColor: 'white'
 	}
 });
