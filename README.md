@@ -12,8 +12,8 @@
 
 ## Team
 - [Cameron Beaulieu](https://github.com/Cameron-Beaulieu)
-- [Truman Be](https://github.com/EvanKilburn)
-- [Brandon Ye](https://github.com/trumanbe01)
+- [Truman Be](https://github.com/trumanbe01)
+- [Brandon Ye](https://github.com/yebrandon)
 
 ## Preface 
 This project was created as part of the Hack Western Hackathon through the University of Western Ontario. The design was built as an attempt to make a mundane task, choosing which restaurant to eat at, more interesting. 
