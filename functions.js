@@ -2,11 +2,11 @@ import React from 'react'
 import {Button} from 'react-native'
 
 
-export function GoToButton({ navigation, screenName, longitude, latitude, restaurants }) {
+export function GoToButton({ navigation, screenName, longitude, latitude, restaurantIDs }) {
     return (
       <Button
         title={`Go to ${screenName}`}
-        onPress={() => navigation.navigate(screenName, {longitude: longitude, latitude: latitude, restauraunts:restaurants})}
+        onPress={() => navigation.navigate(screenName, {longitude:longitude, latitude:latitude, restaurantIDs: restaurantIDs})}
       />
     );
 }

@@ -5,14 +5,12 @@ import { GoToButton } from '../functions'
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 
 export default class CollectInfoScreen extends React.Component{
-
-
   render() {
         return (
          <View style={styles.container}>
-            <Text>Text</Text>
+            <Text>{this.props.navigation.state.params.longitude}</Text>
             <StatusBar style="auto" />
-            <GoToButton navigation = {this.props.navigation} screenName = "Restaurants" />
+            <GoToButton navigation = {this.props.navigation} screenName = "Restaurants" longitude={this.props.navigation.state.params.longitude} latitude = {this.props.navigation.state.params.latitude} restaurantIDs = {this.props.navigation.state.params.restaurantIDs} />
          </View>
         );
     }

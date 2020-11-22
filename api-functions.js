@@ -32,7 +32,7 @@ export async function getDistance(origin, destination) {
 export async function getRestaurants(location, longitude, latitude, radius, category, price) {
   var link = 'https://api.yelp.com/v3/businesses/search?term=restaurants&radius=' + radius + '&limit=50&open_now=true';
   if (location === '') {
-    link = link + '&latitude=' + latitude + '&longitude' + longitude;
+    link = link + '&latitude=' + latitude + '&longitude=' + longitude;
   } else {
     link = link + '&location=' + location;
   }
@@ -42,6 +42,7 @@ export async function getRestaurants(location, longitude, latitude, radius, cate
   if (price !== '') {
     link = link + '&price' + price;
   }
+  console.log(link)
   const response = await fetch(link, {
     method: 'GET',
     headers: {
@@ -49,7 +50,9 @@ export async function getRestaurants(location, longitude, latitude, radius, cate
     }
   })
   const body = await response.json()
+  console.log(longitude+"   "+latitude)
   const restaurants = body.businesses.map((value) => value.id);
+  console.log(restaurants)
   return restaurants
 }
 
