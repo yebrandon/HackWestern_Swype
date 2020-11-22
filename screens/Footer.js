@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 
 export default class Footer extends React.Component {
 	constructor(props) {

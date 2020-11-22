@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import {
-	StyleSheet,
-	ScrollView,
-	Text,
-	View,
-	Image,
-	Linking
-} from 'react-native';
-import Header from './Header';
+import { StyleSheet, ScrollView, Text, View, Image, Linking } from 'react-native';
 import Footer from './Footer';
+import Header from './Header';
 
 export default class Selected extends React.Component {
 	constructor(props) {

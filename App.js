@@ -1,13 +1,12 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
-
-import GetStarted from './GetStarted';
-import Stacks from './Stacks';
-import Selected from './Selected';
-import Expand from './Expand';
-
 import { LogBox } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import GetStarted from './screens/GetStarted';
+import Stacks from './screens/Stacks';
+import Selected from './screens/Selected';
+import Expand from './screens/Expand';
+
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 LogBox.ignoreLogs(['Error: ...']); // Ignore log notification by message

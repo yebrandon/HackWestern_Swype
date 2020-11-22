@@ -1,4 +1,4 @@
-import { YELP_API_KEY, GOOGLE_API_KEY } from './api-keys.json';
+import { YELP_API_KEY, GOOGLE_API_KEY } from './api-functions.json';
 
 export async function getCoordinates() {
 	const response = await fetch(

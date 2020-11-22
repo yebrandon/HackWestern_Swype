@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
+import { AppLoading } from 'expo';
 import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter';
-import { AppLoading } from 'expo';
+import React from 'react';
+import { StyleSheet, View, Image } from 'react-native';
 
 export default function Stacks() {
 	let [fontsLoaded] = useFonts({
@@ -20,7 +20,7 @@ export default function Stacks() {
 			<View style={styles.header}>
 				<Image
 					style={styles.image}
-					source={require('./assets/logo.png')}
+					source={require('../assets/logo.png')}
 				/>
 			</View>
 			<View style={styles.formContainer}></View>

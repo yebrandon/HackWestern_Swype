@@ -1,14 +1,7 @@
-import React, { useState } from 'react';
-import {
-	TextInput,
-	TouchableOpacity,
-	StyleSheet,
-	Text,
-	View,
-	ScrollView
-} from 'react-native';
+import React from 'react';
+import { TextInput, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { getCoordinates, getRestaurants } from './api-functions.js';
+import { getCoordinates, getRestaurants } from '../functions/api-functions.js';
 
 export default class GetStarted extends React.Component {
 	constructor(props) {

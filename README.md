@@ -1,4 +1,4 @@
-![Swype - Choosing What To Eat Made Easy](swypelogored.png)
+![Swype - Choosing What To Eat Made Easy](/assets/swypelogored.png)
 
 ## Index
 <ul>

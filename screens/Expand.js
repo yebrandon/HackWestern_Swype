@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
-import Header from './Header';
+import { AppLoading } from 'expo';
 import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter';
-import { AppLoading } from 'expo';
+import React, { useState } from 'react';
+import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
 import Footer from './Footer';
+import Header from './Header';
 
 export default function Expand() {
 	const [data, setData] = useState({

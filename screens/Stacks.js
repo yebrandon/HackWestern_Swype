@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-	StyleSheet,
-	View,
-	Text,
-	ImageBackground,
-	AppRegistry,
-	Button
-} from 'react-native';
-import Header from './Header';
-import Footer from './Footer';
-import { getRestaurantData } from './api-functions';
+import { StyleSheet, View, Text, ImageBackground, AppRegistry, Button } from 'react-native';
 import Swiper from 'react-native-swiper';
+import Footer from './Footer';
+import Header from './Header';
+import { getRestaurantData } from '../functions/api-functions.js';
 
 export default class Stacks extends React.Component {
 	constructor(props) {
