@@ -6,14 +6,14 @@ import { Option } from '../Option'
 import { Swiper } from 'react-native-deck-swiper'
 
 export default class RestaurantsScreen extends React.Component{
-  constructor (props) {
+ /* constructor (props) {
     this.state = {
       card: props.card,
       swipedAllCards: false,
       cardIndex: 0
     }
   } 
-  
+  */
   renderCard = (card) =>{
     return <Option card = {card} />
   }
