@@ -2,7 +2,7 @@ import React from 'react';
 import { YELP_API_KEY, GOOGLE_API_KEY } from './api-keys.json';
 
 export async function getCoordinates() {
-  return await fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + GOOGLE_API_KEY, {
+  const response = await fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + GOOGLE_API_KEY, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -12,24 +12,13 @@ export async function getCoordinates() {
       considerIp: "true"
     })
   })
-    .then((response) => response.json())
-    //If response is in json then in success
-    .then((responseJson) => {
-      //Success
-      const coordinates = {
-        latitude: responseJson.location.lat,
-        longitude: responseJson.location.lng
-      };
-      console.log('Coordinates: ' + JSON.stringify(coordinates));
-      return coordinates;
-    })
-    //If response is not in json then in error
-    .catch((error) => {
-      //Error
-      alert(JSON.stringify(error));
-      console.error(error);
-    });
-};
+  const body = await response.json()
+  const coordinateValues = {
+    latitude: body.location.lat,
+    longitude: body.location.lng
+  };
+  return coordinateValues
+}
 
 export async function getDistance(origin, destination) {
   //GET request
