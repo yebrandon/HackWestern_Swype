@@ -7,8 +7,11 @@ import { getCoordinates, getDistance, getRestaurants, getRestaurantData } from '
 export default function App() {
   const [coordinates, setCoordinates] = useState();
   const destination = [44.25669328594723, -76.572248715344];
-  const location = 'Kingston, ON';
+  const location = 'Toronto, ON';
   const id = 'RT1HlvUzWzMlVNRDSHoN_Q';
+  const radius = '40000';
+  const category = '';
+  const price = ''
 
   return (
     <View style={styles.container}>
@@ -22,7 +25,7 @@ export default function App() {
         alert('Distance: ' + distance);
       }} />
       <Button title="Get restaurants" onPress={async () => {
-        const restaurants = await getRestaurants(location);
+        const restaurants = await getRestaurants(location, coordinates.longitude, coordinates.latitude, radius, category, price);
         alert('Restaurants: ' + restaurants);
       }} />
       <Button title="Get restaurant data" onPress={async () => {

@@ -53,14 +53,22 @@ export async function getDistance(origin, destination) {
     });
 };
 
-export async function getRestaurants(location) {
+export async function getRestaurants(location, longitude, latitude, radius, category, price) {
   //GET request
-  const long = '43.6532';
-  const lat = '79.3832';
-  const radius = '40000';
-  const category = '';
-  const price = '';
-  return await fetch('https://api.yelp.com/v3/businesses/search?term=restaurants&location=' + location + '&radius=' + radius + '&limit=50&open_now=true', {
+
+  var link = 'https://api.yelp.com/v3/businesses/search?term=restaurants&radius=' + radius + '&limit=50&open_now=true';
+  if (location === '') {
+    link = link + '&latitude=' + latitude + '&longitude' + longitude;
+  } else {
+    link = link + '&location=' + location;
+  }
+  if (category !== '') {
+    link = link + '&category' + category;
+  }
+  if (price !== '') {
+    link = link + '&price' + price;
+  }
+  return await fetch(link, {
     method: 'GET',
     //Request Type
     headers: {
