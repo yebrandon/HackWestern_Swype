@@ -1,7 +1,5 @@
 import React from 'react';
-import { Button, Text, View, StyleSheet } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { GoBack, GoToButton } from '../functions';
+import { View, StyleSheet } from 'react-native';
 import { Option } from '../Option';
 import { Swiper } from 'react-native-deck-swiper';
 

@@ -4,7 +4,6 @@ import Header from './Header';
 import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { AppLoading } from 'expo';
-import { FontAwesome } from '@expo/vector-icons';
 import Footer from './Footer';
 
 export default function Expand() {

@@ -1,8 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
-import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
-import { Inter_600SemiBold } from '@expo-google-fonts/inter';
-import { AppLoading } from 'expo';
 
 export default class Footer extends React.Component {
 	constructor(props) {

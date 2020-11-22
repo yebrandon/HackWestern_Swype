@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { apisAreAvailable } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Button, Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { getCoordinates, getDistance, getRestaurants, getRestaurantData } from './api-functions.js';
 
 export default function App() {

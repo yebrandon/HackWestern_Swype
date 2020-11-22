@@ -18,14 +18,6 @@ export default function Stacks() {
 		<View>
 			<View style={styles.padding}></View>
 			<View style={styles.header}>
-				{/* 				<Text
-					style={styles.back}
-					onPress={() => {
-						console.log('a');
-					}}
-				>
-					Home
-				</Text> */}
 				<Image
 					style={styles.image}
 					source={require('./assets/logo.png')}

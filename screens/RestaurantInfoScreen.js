@@ -1,8 +1,7 @@
-import React from 'react'
-import {Button, Text, View, StyleSheet} from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import { GoBack, GoToButton } from '../functions'
-
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { GoBack } from '../functions';
 
 export default class RestaurantInfoScreen extends React.Component{
     render() {

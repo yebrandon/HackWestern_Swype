@@ -7,9 +7,6 @@ import {
 	View,
 	ScrollView
 } from 'react-native';
-import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
-import { Inter_600SemiBold } from '@expo-google-fonts/inter';
-import { AppLoading } from 'expo';
 import { Picker } from '@react-native-picker/picker';
 import { getCoordinates, getRestaurants } from './api-functions.js';
 

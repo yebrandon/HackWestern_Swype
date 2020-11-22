@@ -1,10 +1,8 @@
-import React from 'react'
-import {Button, Text, View, StyleSheet} from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import { GoToButton } from '../functions'
-import { getCoordinates, getRestaurants } from '../api-functions.js'
-import { GOOGLE_API_KEY } from '../api-keys.json';
-
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { GoToButton } from '../functions';
+import { getCoordinates, getRestaurants } from '../api-functions.js';
 
 export default class TitleScreen extends React.Component{
   state = {

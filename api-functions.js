@@ -1,4 +1,3 @@
-import React from 'react';
 import { YELP_API_KEY, GOOGLE_API_KEY } from './api-keys.json';
 
 export async function getCoordinates() {
@@ -68,7 +67,6 @@ export async function getRestaurants(
 	if (price !== '') {
 		link = link + '&price=' + price;
 	}
-	console.log(link);
 	const response = await fetch(link, {
 		method: 'GET',
 		headers: {
@@ -76,9 +74,7 @@ export async function getRestaurants(
 		}
 	});
 	const body = await response.json();
-	//console.log(longitude+"   "+latitude)
 	const restaurants = body.businesses.map((value) => value.id);
-	//console.log(restaurants)
 	return restaurants;
 }
 

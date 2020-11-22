@@ -1,5 +1,5 @@
-import React from 'react'
-import {ImageBackground, StyleSheet, Text, View} from 'react-native'
+import React from 'react';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 
 const image = { uri: "https://s3-media4.fl.yelpcdn.com/bphoto/Hh-lVMBwVqo7uHgO78HAqw/o.jpg" };
 

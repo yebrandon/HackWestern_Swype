@@ -8,8 +8,10 @@ import Selected from './Selected';
 import Expand from './Expand';
 
 import { LogBox } from 'react-native';
-/* LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs(); //Ignore all log notifications */
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+LogBox.ignoreLogs(['Error: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const MainStackScreens = createStackNavigator(
 	{
