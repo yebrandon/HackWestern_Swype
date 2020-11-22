@@ -16,24 +16,31 @@ import { useNavigation } from '@react-navigation/native';
 import { GoToButton } from './functions';
 
 export default class GetStarted extends React.Component {
-	/* 	const [location, setLocation] = useState(null);
-		const [cuisine, setCuisine] = useState(null);
-		const [price, setPrice] = useState(1);
-		const [latitude, setLatitude] = useState(null);
-		const [longitude, setLongitude] = useState(null);
-		const [restaurants, setRestaurants] = useState(null);
-		const navigation = useNavigation(); */
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			longitude: 0,
 			latitude: 0,
 			restaurantIDs: [],
-			location: null,
-			cuisine: null,
-			price: null
+			location: '',
+			cuisine: '',
+			price: ''
 		};
+	}
+
+	async componentDidMount() {
+		const coordinates = await getCoordinates();
+		this.setState({ longitude: coordinates.longitude });
+		this.setState({ latitude: coordinates.latitude });
+		const restaurants = await getRestaurants(
+			this.state.location,
+			coordinates.longitude,
+			coordinates.latitude,
+			40000,
+			this.state.cuisine,
+			this.state.price
+		);
+		this.setState({ restaurantIDs: restaurants });
 	}
 
 	/* 	let [fontsLoaded] = useFonts({
@@ -46,7 +53,7 @@ export default class GetStarted extends React.Component {
 		} */
 
 	onPress = async () => {
-		const coordinates = await getCoordinates();
+		/* 		const coordinates = await getCoordinates();
 		this.setState({ longitude: coordinates.longitude });
 		this.setState({ latitude: coordinates.latitude });
 		const restaurants = await getRestaurants(
@@ -58,7 +65,7 @@ export default class GetStarted extends React.Component {
 			''
 		);
 		this.setState({ restaurantIDs: restaurants });
-		console.log(restaurants);
+		console.log(restaurants); */
 
 		/* 		console.log(location);
 		console.log(cuisine);
@@ -66,6 +73,8 @@ export default class GetStarted extends React.Component {
 		console.log(restaurants); */
 
 		this.props.navigation.navigate('Stacks', {
+			longitude: this.state.longitude,
+			latitude: this.state.latitude,
 			restaurantIDs: this.state.restaurantIDs
 		});
 	};

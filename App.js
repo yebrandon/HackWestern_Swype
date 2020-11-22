@@ -12,15 +12,18 @@ import GetStarted from './GetStarted';
 import Stacks from './Stacks';
 import Selected from './Selected';
 import Expand from './Expand';
+import Footer from './Footer';
 
 const RestaurantStackScreens = createStackNavigator(
 	{
+		GetStarted: GetStarted,
 		Stacks: Stacks,
 		Selected: Selected,
-		Expand: Expand
+		Expand: Expand,
+		Footer: Footer
 	},
 	{
-		initialRouteName: 'Stacks',
+		initialRouteName: 'GetStarted',
 		navigationOptions: {
 			gestureEnabled: true,
 			gestureDirection: 'horizontal',

@@ -1,87 +1,103 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
+import {
+	StyleSheet,
+	ScrollView,
+	Text,
+	View,
+	Image,
+	Linking
+} from 'react-native';
 import Header from './Header';
 import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { AppLoading } from 'expo';
 import Footer from './Footer';
 
-export default function Selected() {
-	const [data, setData] = useState({
-		name: 'Gangnam Style',
-		url:
-			'https://www.yelp.com/biz/gangnam-style-kingston?adjust_creative=kHuG1-KxYiDcv_WqOYzukw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=kHuG1-KxYiDcv_WqOYzukw',
-		phone: '+1 613-531-6087',
-		categories: ['Korean'],
-		rating: 4.5,
-		address: ['337 Princess St', 'Kingston, ON K7L 3J4', 'Canada'],
-		longitude: -76.48988,
-		latitude: 44.23286,
-		photos: [
-			'https://s3-media4.fl.yelpcdn.com/bphoto/Hh-lVMBwVqo7uHgO78HAqw/o.jpg',
-			'https://s3-media3.fl.yelpcdn.com/bphoto/ZlZ-qqFrgnySwWd3dbTFUg/o.jpg',
-			'https://s3-media4.fl.yelpcdn.com/bphoto/y7XLAE28vangMbl97XS5YQ/o.jpg'
-		],
-		price: '$$',
-		hours: [
-			['1130', '2100', 0], //Monday
-			['1130', '2100', 2],
-			['1130', '2100', 3],
-			['1130', '2200', 4],
-			['1130', '2200', 5],
-			['1200', '2000', 6]
-		]
-	});
-
-	let [fontsLoaded] = useFonts({
-		Raleway_400Regular,
-		Inter_600SemiBold
-	});
-
-	if (!fontsLoaded) {
-		return <AppLoading />;
+export default class Selected extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
 	}
 
-	return (
-		<View style={{ flex: 1 }}>
-			<Header></Header>
-			<View style={styles.imgContainer}>
-				<Image
-					style={styles.featured}
-					source={{ uri: data.photos[0] }}
-				/>
-				<View style={styles.stickerBg}>
-					<Text style={styles.sticker}>Nice {'\n'}Choice!</Text>
-				</View>
-			</View>
+	goBack = () => {
+		this.props.navigation.goBack();
+	};
 
-			<ScrollView style={styles.container}>
-				<View style={styles.info}>
-					<Text style={styles.title}>{data.name}</Text>
-					<View style={styles.row}>
-						<View style={styles.column}>
-							<Text style={styles.body}>
-								{data.categories[0]}
-							</Text>
-							<Text style={styles.body}>{data.address[0]}</Text>
-						</View>
-						<View style={styles.column}>
-							<Text style={styles.metric}>{data.price}</Text>
-							<Text style={styles.metric}>
-								{data.rating} Stars
-							</Text>
-						</View>
+	goHome = () => {
+		this.props.navigation.navigate('GetStarted');
+	};
+
+	render() {
+		return (
+			<View style={{ flex: 1 }}>
+				<Header></Header>
+				<View style={styles.imgContainer}>
+					<Image
+						style={styles.featured}
+						source={{
+							uri: this.props.navigation.state.params.card
+								.photos[0]
+						}}
+					/>
+					<View style={styles.stickerBg}>
+						<Text style={styles.sticker}>Nice {'\n'}Choice!</Text>
 					</View>
 				</View>
-				<View style={styles.info}>
-					<Text style={styles.title}>Phone</Text>
-					{/* {parseHours(data.hours)} */}
-					<Text style={styles.body}>{data.phone}</Text>
-				</View>
-			</ScrollView>
-			<Footer></Footer>
-		</View>
-	);
+
+				<ScrollView style={styles.container}>
+					<View style={styles.info}>
+						<Text style={styles.title}>
+							{this.props.navigation.state.params.card.name}
+						</Text>
+						<View style={styles.row}>
+							<View style={styles.column}>
+								<Text style={styles.body}>
+									{
+										this.props.navigation.state.params.card
+											.address
+									}
+								</Text>
+							</View>
+							<View style={styles.column}>
+								<Text style={styles.metric}>
+									{
+										this.props.navigation.state.params.card
+											.price
+									}
+									$
+								</Text>
+								<Text style={styles.metric}>
+									{
+										this.props.navigation.state.params.card
+											.rating
+									}{' '}
+									Stars
+								</Text>
+							</View>
+						</View>
+					</View>
+					<View style={styles.info}>
+						<Text style={styles.title}>Phone</Text>
+						{/* {parseHours(data.hours)} */}
+						<Text style={styles.body}>
+							{this.props.navigation.state.params.card.phone}
+						</Text>
+						<Text
+							style={styles.link}
+							onPress={() =>
+								Linking.openURL(
+									this.props.navigation.state.params.card.url
+								)
+							}
+						>
+							View on Yelp
+						</Text>
+					</View>
+				</ScrollView>
+				<Footer goBack={this.goBack} goHome={this.goHome}></Footer>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
@@ -137,5 +153,11 @@ const styles = StyleSheet.create({
 	},
 	column: {
 		flex: 1
+	},
+	link: {
+		color: 'blue',
+		fontFamily: 'Raleway_400Regular',
+		fontSize: 18,
+		paddingLeft: 10
 	}
 });
