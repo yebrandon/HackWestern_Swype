@@ -8,14 +8,19 @@ import RestaurantsScreen from './screens/RestaurantsScreen';
 import ChosenScreen from './screens/ChosenScreen';
 import RestaurantInfoScreen from './screens/RestaurantInfoScreen';
 
+import GetStarted from './GetStarted';
+import Stacks from './Stacks';
+import Selected from './Selected';
+import Expand from './Expand';
+
 const RestaurantStackScreens = createStackNavigator(
 	{
-		Restaurants: RestaurantsScreen,
-		RestaurantInfo: RestaurantInfoScreen,
-		CollectInfo: CollectInfoScreen
+		Stacks: Stacks,
+		Selected: Selected,
+		Expand: Expand
 	},
 	{
-		initialRouteName: 'Restaurants',
+		initialRouteName: 'Stacks',
 		navigationOptions: {
 			gestureEnabled: true,
 			gestureDirection: 'horizontal',
@@ -29,13 +34,17 @@ const RestaurantStackScreens = createStackNavigator(
 
 const MainStackScreens = createStackNavigator(
 	{
-		Title: TitleScreen,
+		GetStarted: GetStarted,
+		Stacks: Stacks,
+		Selected: Selected,
+		Expand: Expand
+		/* 		//Title: TitleScreen,
 		CollectInfo: CollectInfoScreen,
 		Chosen: ChosenScreen,
-		Restaurant: RestaurantStackScreens
+		Restaurant: RestaurantStackScreens */
 	},
 	{
-		initialRouteName: 'Title'
+		initialRouteName: 'GetStarted'
 	}
 );
 

@@ -5,38 +5,46 @@ import Footer from './Footer';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Stacks() {
-	return (
-		<View style={{ flex: 1 }}>
-			<Header></Header>
-			<View style={styles.container}>
-				<View style={styles.arrows}>
-					<View
-						style={{ backgroundColor: 'white', borderRadius: 30 }}
-					>
-						<MaterialCommunityIcons
-							name='window-close'
-							size={50}
-							color='red'
-						/>
-					</View>
-					<View
-						style={{ backgroundColor: 'white', borderRadius: 30 }}
-					>
-						<MaterialCommunityIcons
-							name='check'
-							size={50}
-							color='green'
-						/>
+export default class Stacks extends React.Component {
+	render() {
+		return (
+			<View style={{ flex: 1 }}>
+				<Header></Header>
+				<View style={styles.container}>
+					<View style={styles.arrows}>
+						<View
+							style={{
+								backgroundColor: 'white',
+								borderRadius: 30
+							}}
+						>
+							<MaterialCommunityIcons
+								name='window-close'
+								size={50}
+								color='red'
+							/>
+						</View>
+						<View
+							style={{
+								backgroundColor: 'white',
+								borderRadius: 30
+							}}
+						>
+							<MaterialCommunityIcons
+								name='check'
+								size={50}
+								color='green'
+							/>
+						</View>
 					</View>
 				</View>
+				<View style={{ alignItems: 'center' }}>
+					<Feather name='chevron-up' size={60} color='#666666' />
+				</View>
+				<Footer></Footer>
 			</View>
-			<View style={{ alignItems: 'center' }}>
-				<Feather name='chevron-up' size={60} color='#666666' />
-			</View>
-			<Footer></Footer>
-		</View>
-	);
+		);
+	}
 }
 
 const styles = StyleSheet.create({

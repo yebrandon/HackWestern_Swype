@@ -11,60 +11,99 @@ import { useFonts, Raleway_400Regular } from '@expo-google-fonts/raleway';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { AppLoading } from 'expo';
 import { Picker } from '@react-native-picker/picker';
+import { getCoordinates, getRestaurants } from './api-functions.js';
+import { useNavigation } from '@react-navigation/native';
+import { GoToButton } from './functions';
 
-export default function GetStarted() {
-	const [location, setLocation] = useState(null);
-	const [cuisine, setCuisine] = useState(null);
-	const [price, setPrice] = useState(1);
+export default class GetStarted extends React.Component {
+	/* 	const [location, setLocation] = useState(null);
+		const [cuisine, setCuisine] = useState(null);
+		const [price, setPrice] = useState(1);
+		const [latitude, setLatitude] = useState(null);
+		const [longitude, setLongitude] = useState(null);
+		const [restaurants, setRestaurants] = useState(null);
+		const navigation = useNavigation(); */
 
-	let [fontsLoaded] = useFonts({
-		Raleway_400Regular,
-		Inter_600SemiBold
-	});
-
-	if (!fontsLoaded) {
-		return <AppLoading />;
+	constructor(props) {
+		super(props);
+		this.state = {
+			longitude: 0,
+			latitude: 0,
+			restaurantIDs: [],
+			location: null,
+			cuisine: null,
+			price: null
+		};
 	}
 
-	const onPress = () => {
-		console.log(location);
+	/* 	let [fontsLoaded] = useFonts({
+			Raleway_400Regular,
+			Inter_600SemiBold
+		});
+	
+		if (!fontsLoaded) {
+			return <AppLoading />;
+		} */
+
+	onPress = async () => {
+		const coordinates = await getCoordinates();
+		this.setState({ longitude: coordinates.longitude });
+		this.setState({ latitude: coordinates.latitude });
+		const restaurants = await getRestaurants(
+			'',
+			coordinates.longitude,
+			coordinates.latitude,
+			40000,
+			'',
+			''
+		);
+		this.setState({ restaurantIDs: restaurants });
+		console.log(restaurants);
+
+		/* 		console.log(location);
 		console.log(cuisine);
 		console.log(price);
+		console.log(restaurants); */
+
+		this.props.navigation.navigate('Stacks', {
+			restaurantIDs: this.state.restaurantIDs
+		});
 	};
 
-	return (
-		<View>
-			<View style={styles.header}>
-				<Text style={styles.title}>Get {'\n'}Started </Text>
-			</View>
-			<View style={styles.formContainer}>
-				<View style={styles.form}>
-					<Text style={styles.label}>Location </Text>
-					<View style={styles.input}>
-						<TextInput
-							style={{
-								height: '100%',
-								left: 10
-							}}
-							onChangeText={(text) => {
-								setLocation(text);
-							}}
-							value={location}
-						></TextInput>
-					</View>
-					<Text style={styles.label}>Cuisine </Text>
-					<View style={styles.input}>
-						<TextInput
-							style={{
-								height: '100%',
-								left: 10
-							}}
-							onChangeText={(text) => {
-								setCuisine(text);
-							}}
-							value={cuisine}
-						></TextInput>
-						{/* 						<Picker
+	render() {
+		return (
+			<View>
+				<View style={styles.header}>
+					<Text style={styles.title}>Get {'\n'}Started </Text>
+				</View>
+				<View style={styles.formContainer}>
+					<View style={styles.form}>
+						<Text style={styles.label}>Location </Text>
+						<View style={styles.input}>
+							<TextInput
+								style={{
+									height: '100%',
+									left: 10
+								}}
+								onChangeText={(text) => {
+									this.setState({ location: text });
+								}}
+								value={this.state.location}
+							></TextInput>
+						</View>
+						<Text style={styles.label}>Cuisine </Text>
+						<View style={styles.input}>
+							<TextInput
+								style={{
+									height: '100%',
+									left: 10
+								}}
+								onChangeText={(text) => {
+									this.setState({ cuisine: text });
+								}}
+								value={this.state.cuisine}
+							></TextInput>
+							{/* 						<Picker
 							selectedValue={cuisine}
 							onValueChange={(itemValue, itemIndex) =>
 								setCuisine(itemValue)
@@ -74,34 +113,35 @@ export default function GetStarted() {
 							<Picker.Item label='Sushi' value='sushi' />
 							<Picker.Item label='Mexican' value='mexican' />
 						</Picker> */}
-					</View>
-					<Text style={styles.label}>Price </Text>
-					<View style={styles.input}>
-						<Picker
-							selectedValue={price}
-							onValueChange={(itemValue, itemIndex) =>
-								setPrice(itemValue)
-							}
-						>
-							<Picker.Item label='$' value='1' />
-							<Picker.Item label='$$' value='2' />
-							<Picker.Item label='$$$' value='3' />
-							<Picker.Item label='$$$$' value='4' />
-						</Picker>
-					</View>
+						</View>
+						<Text style={styles.label}>Price </Text>
+						<View style={styles.input}>
+							<Picker
+								selectedValue={this.state.price}
+								onValueChange={(itemValue, itemIndex) =>
+									this.setState({ price: itemValue })
+								}
+							>
+								<Picker.Item label='$' value='1' />
+								<Picker.Item label='$$' value='2' />
+								<Picker.Item label='$$$' value='3' />
+								<Picker.Item label='$$$$' value='4' />
+							</Picker>
+						</View>
 
-					<View style={styles.submit}>
-						<TouchableOpacity
-							style={styles.button}
-							onPress={onPress}
-						>
-							<Text style={styles.submitLabel}>Go</Text>
-						</TouchableOpacity>
+						<View style={styles.submit}>
+							<TouchableOpacity
+								style={styles.button}
+								onPress={this.onPress}
+							>
+								<Text style={styles.submitLabel}>Go</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
 			</View>
-		</View>
-	);
+		);
+	}
 }
 
 const styles = StyleSheet.create({
@@ -114,8 +154,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	title: {
-		fontSize: 30,
-		fontFamily: 'Inter_600SemiBold'
+		fontSize: 30
+		//fontFamily: 'Inter_600SemiBold'
 	},
 	form: {
 		height: 400,
@@ -136,13 +176,13 @@ const styles = StyleSheet.create({
 	},
 	label: {
 		fontSize: 16,
-		fontFamily: 'Raleway_400Regular',
+		//fontFamily: 'Raleway_400Regular',
 		color: 'white',
 		paddingBottom: 10
 	},
 	pressableText: {
 		fontSize: 36,
-		fontFamily: 'Raleway_400Regular',
+		//fontFamily: 'Raleway_400Regular',
 		paddingBottom: 10
 	},
 	buttons: {
@@ -159,7 +199,7 @@ const styles = StyleSheet.create({
 	},
 	submitLabel: {
 		fontSize: 16,
-		fontFamily: 'Raleway_400Regular',
+		//fontFamily: 'Raleway_400Regular',
 		color: 'white'
 	},
 	submit: {
