@@ -27,6 +27,11 @@ This project was created as part of the Hack Western Hackathon through the Unive
 - Expo
 - React Native
 
+### APIS
+- Yelp Fusion
+- Google Distance Matrix
+- Google Geolocation
+
 ## Mission
 Swype was developed to not only make the task of choosing which restaurant to eat at (or order from), but to also make the experience easier. When shown 100 options all at the same time, it can be difficult to decide on what options you prefer. However, when that same set of 100 items is shown 1 by 1, it is much easier for someone to decide if they like that item or not. Through an interactive user interface created using React-Native and Expo, the user is able to enter search criteria and then be shown various options meeting those citeria within a close proximity to the given location
 
