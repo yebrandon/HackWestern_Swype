@@ -1,8 +1,7 @@
-import React from 'react'
-import {Button, Text, View, StyleSheet} from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import { GoToButton } from '../functions'
-import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { GoToButton } from '../functions';
 
 export default class CollectInfoScreen extends React.Component{
   render() {

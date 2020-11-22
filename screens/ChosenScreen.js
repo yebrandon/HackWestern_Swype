@@ -1,5 +1,5 @@
-import React from 'react'
-import {Button, Text, View, StyleSheet} from 'react-native'
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 export default class ChosenScreen extends React.Component{
