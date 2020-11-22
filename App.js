@@ -1,22 +1,37 @@
 import { apisAreAvailable } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Button, Text, View } from 'react-native';
 import { getCoordinates, getDistance, getRestaurants, getRestaurantData } from './api-functions.js';
 
 export default function App() {
-  const origin = [44.23615241301187, -76.5017104019393];
+  const [coordinates, setCoordinates] = useState();
   const destination = [44.25669328594723, -76.572248715344];
-  const location = 'Kingston, ON';
+  const location = 'Toronto, ON';
   const id = 'RT1HlvUzWzMlVNRDSHoN_Q';
+  const radius = '40000';
+  const category = '';
+  const price = ''
 
   return (
     <View style={styles.container}>
-      <Text>Testing</Text>
-      <Button title="Retrieve restaurants" onPress={getCoordinates()} />
-      <Button title="Retrieve restaurants" onPress={getDistance(origin, destination)} />
-      <Button title="Retrieve restaurants" onPress={getRestaurants(location)} />
-      <Button title="Retrieve restaurant data" onPress={getRestaurantData(id)} />
+      <Text>Test</Text>
+      <Button title="Get coordinates" onPress={async () => {
+        setCoordinates(await getCoordinates());
+        alert('Latitude: ' + coordinates.latitude + '\nLongitude: ' + coordinates.longitude);
+      }} />
+      <Button title="Get distance" onPress={async () => {
+        const distance = await getDistance(coordinates, destination);
+        alert('Distance: ' + distance);
+      }} />
+      <Button title="Get restaurants" onPress={async () => {
+        const restaurants = await getRestaurants(location, coordinates.longitude, coordinates.latitude, radius, category, price);
+        alert('Restaurants: ' + restaurants);
+      }} />
+      <Button title="Get restaurant data" onPress={async () => {
+        const restaurantData = await getRestaurantData(id);
+        alert('Restaurant data: ' + JSON.stringify(restaurantData));
+      }} />
       <StatusBar style="auto" />
     </View>
   );

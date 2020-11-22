@@ -1,8 +1,8 @@
 import React from 'react';
 import { YELP_API_KEY, GOOGLE_API_KEY } from './api-keys.json';
 
-export function getCoordinates() {
-  fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + GOOGLE_API_KEY, {
+export async function getCoordinates() {
+  return await fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + GOOGLE_API_KEY, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -16,8 +16,12 @@ export function getCoordinates() {
     //If response is in json then in success
     .then((responseJson) => {
       //Success
-      alert(responseJson.location.lat + " " + responseJson.location.lng);
-      console.log(responseJson.location.lat, responseJson.location.lng);
+      const coordinates = {
+        latitude: responseJson.location.lat,
+        longitude: responseJson.location.lng
+      };
+      console.log('Coordinates: ' + JSON.stringify(coordinates));
+      return coordinates;
     })
     //If response is not in json then in error
     .catch((error) => {
@@ -27,9 +31,9 @@ export function getCoordinates() {
     });
 };
 
-export function getDistance(origin, destination) {
+export async function getDistance(origin, destination) {
   //GET request
-  fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=' + origin[0] + ',' + origin[1] + '&destinations=' + destination[0] + ',' + destination[1] + '&key=' + GOOGLE_API_KEY, {
+  return await fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=' + origin.latitude + ',' + origin.longitude + '&destinations=' + destination[0] + ',' + destination[1] + '&key=' + GOOGLE_API_KEY, {
     method: 'GET',
     //Request Type
   })
@@ -37,8 +41,9 @@ export function getDistance(origin, destination) {
     //If response is in json then in success
     .then((responseJson) => {
       //Success
-      alert(responseJson.status);
-      console.log(responseJson.rows[0].elements[0].duration.text);
+      const distance = responseJson.rows[0].elements[0].duration.text;
+      console.log('Distance: ' + distance);
+      return distance;
     })
     //If response is not in json then in error
     .catch((error) => {
@@ -48,33 +53,22 @@ export function getDistance(origin, destination) {
     });
 };
 
-export function getRestaurants(location) {
+export async function getRestaurants(location, longitude, latitude, radius, category, price) {
   //GET request
-  fetch('https://api.yelp.com/v3/businesses/search?term=restaurants&location=' + location, {
-    method: 'GET',
-    //Request Type
-    headers: {
-      'Authorization': 'Bearer ' + YELP_API_KEY
-    },
-  })
-    .then((response) => response.json())
-    //If response is in json then in success
-    .then((responseJson) => {
-      //Success
-      alert(responseJson.businesses[0].name);
-      console.log(responseJson.businesses[0]);
-    })
-    //If response is not in json then in error
-    .catch((error) => {
-      //Error
-      alert(JSON.stringify(error));
-      console.error(error);
-    });
-};
 
-export function getRestaurantData(id) {
-  //GET request
-  fetch('https://api.yelp.com/v3/businesses/' + id, {
+  var link = 'https://api.yelp.com/v3/businesses/search?term=restaurants&radius=' + radius + '&limit=50&open_now=true';
+  if (location === '') {
+    link = link + '&latitude=' + latitude + '&longitude' + longitude;
+  } else {
+    link = link + '&location=' + location;
+  }
+  if (category !== '') {
+    link = link + '&category' + category;
+  }
+  if (price !== '') {
+    link = link + '&price' + price;
+  }
+  return await fetch(link, {
     method: 'GET',
     //Request Type
     headers: {
@@ -85,8 +79,45 @@ export function getRestaurantData(id) {
     //If response is in json then in success
     .then((responseJson) => {
       //Success
-      alert(responseJson.name);
-      console.log(responseJson);
+      const restaurants = responseJson.businesses.map((value) => value.id);
+      console.log('Restaurants: ' + restaurants);
+      return restaurants;
+    })
+    //If response is not in json then in error
+    .catch((error) => {
+      //Error
+      alert(JSON.stringify(error));
+      console.error(error);
+    });
+};
+
+export async function getRestaurantData(id) {
+  //GET request
+  return await fetch('https://api.yelp.com/v3/businesses/' + id, {
+    method: 'GET',
+    //Request Type
+    headers: {
+      'Authorization': 'Bearer ' + YELP_API_KEY
+    },
+  })
+    .then((response) => response.json())
+    //If response is in json then in success
+    .then((responseJson) => {
+      //Success
+      const restaurantData = {
+        name: responseJson.name,
+        url: responseJson.url,
+        phone: responseJson.display_phone,
+        categories: responseJson.categories.map((values) => values.title),
+        rating: responseJson.rating,
+        address: responseJson.location.display_address,
+        longitude: responseJson.coordinates.longitude,
+        latitude: responseJson.coordinates.latitude,
+        photos: responseJson.photos,
+        price: responseJson.price,
+        hours: responseJson.hours[0].open.map((value) => [value.start, value.end, value.day])};
+      console.log('Restaurant data: ' + JSON.stringify(restaurantData));
+      return restaurantData;
     })
     //If response is not in json then in error
     .catch((error) => {
