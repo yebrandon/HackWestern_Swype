@@ -13,4 +13,4 @@ web-build/
 .DS_Store
 
 # api keys
-api-keys.json
+functions/api-functions.json
