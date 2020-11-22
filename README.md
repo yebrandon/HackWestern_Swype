@@ -42,7 +42,9 @@ Swype was developed to not only make the task of choosing which restaurant to ea
 - Information about their selection is displayed in a screen as well as useful links for that location 
 
 ## Watch Our Demo
-Coming Soon
+<figure class="video_container">
+  <iframe src="https://youtu.be/mrWfy-9_gYc" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
 
 
